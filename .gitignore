@@ -34,7 +34,6 @@ build/
 
 ### properties ###
 *.properties
-!**/src/main/**/application.properties
 *.yml
 *.yaml
 application.properties
