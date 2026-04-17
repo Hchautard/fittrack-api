@@ -1,5 +1,6 @@
 package com.fittrack_api.security;
 
+import com.fittrack_api.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,43 +15,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final CustomUserDetailsService userDetailsService;
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails admin = User.withUsername("Amiya")
-                .password(encoder.encode("123"))
-                .roles("ADMIN", "USER")
-                .build();
-
-        UserDetails user = User.withUsername("Ejaz")
-                .password(encoder.encode("123"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/welcome").permitAll()
-                        .requestMatchers("/auth/user/**").hasRole("USER")
-                        .requestMatchers("/auth/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/welcome").hasRole("USER")
                         .anyRequest().authenticated()
                 )
-
                 .formLogin(form -> form
                         .defaultSuccessUrl("/auth/welcome", true)
                 )
-
-                .httpBasic(httpBasic -> {});
+                .userDetailsService(userDetailsService);
 
         return http.build();
     }
