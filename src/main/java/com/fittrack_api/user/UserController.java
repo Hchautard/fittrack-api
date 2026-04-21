@@ -1,4 +1,4 @@
-package com.fittrack_api;
+package com.fittrack_api.user;
 
 import java.util.List;
 

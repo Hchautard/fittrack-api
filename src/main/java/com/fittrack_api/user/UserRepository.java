@@ -1,4 +1,4 @@
-package com.fittrack_api;
+package com.fittrack_api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
