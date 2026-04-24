@@ -1,4 +1,4 @@
-package com.example.fittrack_api;
+package com.fittrack_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
