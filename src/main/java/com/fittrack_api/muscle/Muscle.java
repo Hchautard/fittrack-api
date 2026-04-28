@@ -1,9 +1,25 @@
 package com.fittrack_api.muscle;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Muscle {
-    String name;
-    String type;
-    String group;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String name;
+
+    private String type;
+
+    @Column(name = "muscle_group")
+    private String group;
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
