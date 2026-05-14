@@ -1,6 +1,7 @@
 package com.fittrack_api.workout;
 
 import com.fittrack_api.exercise.Exercise;
+import com.fittrack_api.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -22,6 +23,10 @@ public class Workout {
 
     private LocalDate date;
     private LocalTime time;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToMany
     @JoinTable(
@@ -114,4 +119,8 @@ public class Workout {
     public void setStressScore(Integer stressScore) {
         this.stressScore = stressScore;
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 }
